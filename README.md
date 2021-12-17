@@ -18,6 +18,12 @@ Implementation of spn-16 encryption algorithm in pure Dart. Developed for educat
 - SPN-16(encrypt/decrypt)
 - utf8 support
 
+## TODO
+
+- [ ] Cipher text must be 8 characters
+- [ ] Cipher text length test
+- [ ] utf8 codes test
+
 ## Getting started
 
 TODO: List prerequisites and provide or point to information on how to

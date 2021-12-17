@@ -8,26 +8,35 @@ class SPN16 {
     List<int> bytesSubject = bytesText;
     for (var i = 0; i < bytesText.length / 2; i++) {
       for (var z = 0; z < 4; z++) {
-        bytesSubject[i * 2] ^= bytesCipher[z * 2];
-        bytesSubject[(i * 2) + 1] ^= bytesCipher[(z * 2) + 1];
+        bytesSubject[i * 2] = bytesText[i * 2] ^ bytesCipher[z * 2];
+        bytesSubject[(i * 2) + 1] =
+            bytesText[(i * 2) + 1] ^ bytesCipher[(z * 2) + 1];
       }
     }
     return bytesSubject;
   }
 
   String encrypt({required String plainText, required String keyword}) {
-    plainText = plainText.length % 2 == 0 ? plainText : plainText + " ";
-    return EncryptedText.fromBytes(_encryption(
-            bytesText: PlainText(plainText).asBytes,
-            bytesCipher: CipherText(keyword).asBytes))
-        .asText;
+    try {
+      plainText = plainText.length % 2 == 0 ? plainText : plainText + " ";
+      return EncryptedText.fromBytes(_encryption(
+              bytesText: PlainText(plainText).asBytes,
+              bytesCipher: CipherText(keyword).asBytes))
+          .asText;
+    } on FormatException {
+      return "Failed";
+    }
   }
 
   String decyrpt({required String encryptedText, required String keyword}) {
-    return PlainText.fromBytes(_encryption(
-            bytesText: EncryptedText(encryptedText).asBytes,
-            bytesCipher: CipherText(keyword).asBytes))
-        .asText;
+    try {
+      return PlainText.fromBytes(_encryption(
+              bytesText: EncryptedText(encryptedText).asBytes,
+              bytesCipher: CipherText(keyword).asBytes))
+          .asText;
+    } on FormatException {
+      return "Failed";
+    }
   }
 }
 

@@ -1,10 +1,9 @@
+import 'dart:convert';
+
 import 'package:spn_16_encryption/src/message.dart';
 
 class EncryptedText extends Message {
-  @override
-  EncryptedText(String text) : super(text) {
-    super.bytes = text.codeUnits;
-  }
+  EncryptedText(String text) : super(text);
 
   @override
   EncryptedText.fromBytes(List<int> bytes) : super.fromBytes(bytes) {

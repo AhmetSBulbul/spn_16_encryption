@@ -6,8 +6,20 @@ void main() {
   test('encryption', () {
     final spn = SPN16();
     expect(spn.encrypt(plainText: "Selam", keyword: "parolaol"), "Rfmbl#");
-    print(spn.encrypt(plainText: "Selam", keyword: "parolaol"));
   });
+
+  test('decryption', () {
+    final spn = SPN16();
+    expect(
+        spn.decyrpt(encryptedText: "Rfmbl#", keyword: "parolaol").trimRight(),
+        "Selam");
+  });
+
+  test('format Error', () {
+    final spn = SPN16();
+    expect(spn.encrypt(plainText: "Selam", keyword: "parola"), "Failed");
+  });
+
   /*test('adds one to input values', () {
     final calculator = Calculator();
     expect(calculator.addOne(2), 3);

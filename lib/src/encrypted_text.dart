@@ -7,7 +7,7 @@ class EncryptedText extends Message {
 
   @override
   EncryptedText.fromBytes(List<int> bytes) : super.fromBytes(bytes) {
-    super.text = String.fromCharCodes(bytes);
+    super.text = utf8.decode(bytes);
   }
 
   List<int> get asBytes => super.bytes;

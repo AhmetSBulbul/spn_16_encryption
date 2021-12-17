@@ -16,7 +16,6 @@ Implementation of spn-16 encryption algorithm in pure Dart. Developed for educat
 ## Features
 
 - SPN-16(encrypt/decrypt)
-- utf8 support
 
 ## TODO
 

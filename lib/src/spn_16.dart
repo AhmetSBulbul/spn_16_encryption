@@ -1,8 +1,10 @@
 import 'cipher.dart';
 import 'encrypted_text.dart';
 import 'plain_text.dart';
+import 'validator.dart';
 
 class SPN16 {
+  final Validator _validator = Validator();
   List<int> _encryption(
       {required List<int> bytesText, required List<int> bytesCipher}) {
     List<int> bytesSubject = bytesText;
@@ -16,26 +18,32 @@ class SPN16 {
     return bytesSubject;
   }
 
+  bool _validate(String plainText, String keyword) {
+    return _validator.validateCharacters(plainText) &&
+        _validator.validateKeywordLength(keyword) &&
+        _validator.validateCharacters(keyword);
+  }
+
   String encrypt({required String plainText, required String keyword}) {
-    try {
+    if (_validate(plainText, keyword)) {
       plainText = plainText.length % 2 == 0 ? plainText : plainText + " ";
       return EncryptedText.fromBytes(_encryption(
               bytesText: PlainText(plainText).asBytes,
               bytesCipher: CipherText(keyword).asBytes))
           .asText;
-    } on FormatException {
-      return "Failed";
+    } else {
+      throw const FormatException();
     }
   }
 
   String decyrpt({required String encryptedText, required String keyword}) {
-    try {
+    if (_validate(encryptedText, keyword)) {
       return PlainText.fromBytes(_encryption(
               bytesText: EncryptedText(encryptedText).asBytes,
               bytesCipher: CipherText(keyword).asBytes))
           .asText;
-    } on FormatException {
-      return "Failed";
+    } else {
+      throw const FormatException();
     }
   }
 }

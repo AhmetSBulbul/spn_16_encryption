@@ -3,20 +3,33 @@ import 'package:flutter_test/flutter_test.dart';
 import 'package:spn_16_encryption/spn_16_encryption.dart';
 
 void main() {
-  test('encryption', () {
-    final spn = SPN16();
-    expect(spn.encrypt(plainText: "Selam", keyword: "parolaol"), "Rfmbl#");
-  });
-
-  test('decryption', () {
-    final spn = SPN16();
+  final spn = SPN16();
+  test('encryption with valid values', () {
     expect(
-        spn.decyrpt(encryptedText: "Rfmbl#", keyword: "parolaol").trimRight(),
-        "Selam");
+        spn.encrypt(
+            plainText: "Hey, this is a plain text.", keyword: "parolaol"),
+        "Ifx/!wijr#hp!b!smbhm!wd{u-");
   });
 
-  test('format Error', () {
-    final spn = SPN16();
-    expect(spn.encrypt(plainText: "Selam", keyword: "parola"), "Failed");
+  test('decryption with valid values', () {
+    expect(
+        spn.decyrpt(
+            encryptedText: "Ifx/!wijr#hp!b!smbhm!wd{u-", keyword: "parolaol"),
+        "Hey, this is a plain text.");
+  });
+
+  test('non-valid keyword length', () {
+    expect(
+        () => spn.encrypt(
+            plainText: "Hey, this is a plain text.", keyword: 'parolaaaaaa'),
+        throwsFormatException);
+  });
+
+  test('non-valid characters in text', () {
+    expect(
+        () => spn.encrypt(
+            plainText: "Selam, türkçe karakter ve emoji kullanıyorum. 😎",
+            keyword: 'parolaol'),
+        throwsFormatException);
   });
 }

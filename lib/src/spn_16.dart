@@ -24,6 +24,16 @@ class SPN16 {
         _validator.validateCharacters(keyword);
   }
 
+  //Helper functions
+  bool validateText(String text) {
+    return _validator.validateCharacters(text);
+  }
+
+  bool validateKeyword(String keyword) {
+    return _validator.validateCharacters(keyword) &&
+        _validator.validateKeywordLength(keyword);
+  }
+
   String encrypt({required String plainText, required String keyword}) {
     if (_validate(plainText, keyword)) {
       plainText = plainText.length % 2 == 0 ? plainText : plainText + " ";

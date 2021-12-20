@@ -1,5 +1,5 @@
 import 'package:flutter_test/flutter_test.dart';
-import 'package:spn_16_encryption/src/cipher_spn.dart';
+import 'package:spn_16_encryption/src/key_spn.dart';
 import 'package:spn_16_encryption/src/spn16.dart';
 import 'package:spn_16_encryption/src/digest_spn.dart';
 
@@ -7,7 +7,7 @@ void main() {
   test('encode with valid values', () {
     expect(
         Spn16.convert(DigestSpn.fromString(validInput),
-                CipherSpn.fromString(validKeyword))
+                KeySpn.fromString(validKeyword))
             .toString(),
         validOutput);
   });
